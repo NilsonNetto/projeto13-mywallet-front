@@ -48,7 +48,10 @@ body{
   font-family: 'Raleway', sans-serif;
 	background-color: #8C11BE;
 }
-  *{
+a{
+	text-decoration: none;
+}
+*{
   box-sizing: border-box;
 }`;
 

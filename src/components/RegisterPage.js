@@ -1,26 +1,34 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import Login from "../services/mywallet";
+import Register from "../services/mywallet";
 
 
-export default function LoginPage() {
+export default function RegisterPage() {
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const navigate = useNavigate();
 
   function handleForm(e) {
     e.preventDefault();
 
+    if (password !== passwordConfirm) {
+      return alert('As senhas não são iguais!');
+    }
+
     const body = {
+      name,
       email,
       password
     };
 
-    Login(body)
+    Register(body)
       .then(res => {
-        navigate('/MainPage');
+        alert('Usuário criado com sucesso!');
+        navigate('/');
       })
       .catch(res => {
         console.log(res.data);
@@ -34,6 +42,12 @@ export default function LoginPage() {
     <Wrapper>
       <h1>MyWallet</h1>
       <Form>
+        <input type='text'
+          placeholder="Nome"
+          value={name}
+          onChange={(e => setName(e.target.value))}
+          required
+        />
         <input type='email'
           placeholder="Email"
           value={email}
@@ -45,9 +59,14 @@ export default function LoginPage() {
           value={password}
           onChange={(e => setPassword(e.target.value))}
           required />
-        <button onClick={handleForm}>Entrar</button>
+        <input type='password'
+          placeholder="Confirme sua senha"
+          value={passwordConfirm}
+          onChange={(e => setPasswordConfirm(e.target.value))}
+          required />
+        <button onClick={handleForm}>Cadastrar</button>
       </Form>
-      <Link to='/register'>Primeira vez? Cadastre-se!</Link>
+      <Link to='/'>Já tem uma conta? Entre agora!</Link>
     </Wrapper>
   );
 }
