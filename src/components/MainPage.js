@@ -48,7 +48,6 @@ export default function MainPage() {
         </div>
       </Footer>
     </Wrapper>
-
   );
 }
 
@@ -77,7 +76,7 @@ const History = styled.div`
   margin: 15px 0;
   width: 100%;
   height: 100%;
-  padding: 10px 15px;
+  padding: 20px 15px 10px 15px;
   background-color: #FFFFFF;
   border-radius: 5px;
   display: flex;

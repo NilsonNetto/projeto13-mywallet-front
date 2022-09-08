@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import Login from "../services/mywallet";
+import login from "../services/mywallet";
 
 
 export default function LoginPage() {
@@ -18,7 +18,7 @@ export default function LoginPage() {
       password
     };
 
-    Login(body)
+    login(body)
       .then(res => {
         navigate('/MainPage');
       })

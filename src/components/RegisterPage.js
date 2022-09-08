@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import Register from "../services/mywallet";
+import register from "../services/mywallet";
 
 
 export default function RegisterPage() {
@@ -25,7 +25,7 @@ export default function RegisterPage() {
       password
     };
 
-    Register(body)
+    register(body)
       .then(res => {
         alert('Usuário criado com sucesso!');
         navigate('/');
