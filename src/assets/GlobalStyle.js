@@ -47,6 +47,7 @@ table {
 body{
   font-family: 'Raleway', sans-serif;
 	background-color: #8C11BE;
+	color: #FFFFFF;
 }
 a{
 	text-decoration: none;

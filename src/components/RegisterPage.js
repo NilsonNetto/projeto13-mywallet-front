@@ -34,8 +34,6 @@ export default function RegisterPage() {
         console.log(res.data);
         alert("Email ou senha incorretos");
       });
-
-
   }
 
   return (
@@ -84,7 +82,6 @@ const Wrapper = styled.div`
     font-family: 'Saira Stencil One', cursive;
     font-size: 32px;
     margin-bottom: 30px;
-    color: #FFFFFF;
   }
 
   a{
