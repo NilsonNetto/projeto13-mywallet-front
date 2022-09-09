@@ -1,41 +1,49 @@
 import styled from "styled-components";
 import { RiLogoutBoxRLine, RiAddCircleLine, RiIndeterminateCircleLine } from 'react-icons/ri';
+import UserContext from "../contexts/UserContext";
+import { useContext, useEffect, useState } from "react";
+import { getHistory } from "../services/mywallet";
+import Movement from "./Movement";
 
 export default function MainPage() {
-
+  const [transactionsHistory, setTransactionsHistory] = useState([]);
+  const { userData } = useContext(UserContext);
 
   //fazer um get de todas as contas da pessoa e colocar na variável de estado
   //se tiver, faz um map com a variável deestado para mostrar as movimentações
   //senão, coloca a mensagem "Não há registros de <br/> entrada ou de saída"
 
+  useEffect(() => {
+    if (userData) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.token}`
+        }
+      };
+
+      console.log(config);
+      getHistory(config)
+        .then(res => {
+          setTransactionsHistory(res.data);
+        })
+        .catch(res => {
+          console.log(res.data);
+          alert('Error');
+        });
+    }
+  }, []);
+
+
   return (
     <Wrapper>
       <Header>
-        <h2>Olá, Fulano</h2>
+        <h2>Olá, {userData.name}</h2>
         <RiLogoutBoxRLine />
       </Header>
       <History>
-        <Movement>
-          <div>
-            <Date>26/11</Date>
-            <Description>Almoço com a mãe</Description>
-          </div>
-          <Price>R$ 26,66</Price>
-        </Movement>
-        <Movement>
-          <div>
-            <Date>26/11</Date>
-            <Description>Almoço com a mãe</Description>
-          </div>
-          <Price>R$ 26,66</Price>
-        </Movement>
-        <Movement>
-          <div>
-            <Date>26/11</Date>
-            <Description>Almoço com a mãe</Description>
-          </div>
-          <Price>R$ 26,66</Price>
-        </Movement>
+        {transactionsHistory.length === 0 ? 'Não há registros de entradas ou saídas' :
+          transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
+          />)}
       </History>
       <Footer>
         <div>
@@ -82,27 +90,6 @@ const History = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px
-`;
-
-const Movement = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Date = styled.span`
-  font-size: 16px;
-  color: #C6C6C6;
-`;
-
-const Description = styled.span`
-  margin-left: 10px;
-  font-size: 16px;
-  color: #000000;
-`;
-
-const Price = styled.span`
-  font-size: 16px;
-  color: ${({ price }) => price > 0 ? '#03AC00' : '#C70000'} 
 `;
 
 const Footer = styled.div`

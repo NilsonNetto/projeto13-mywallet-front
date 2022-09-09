@@ -2,8 +2,9 @@ import GlobalStyle from "../assets/GlobalStyle";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import MainPage from "./MainPage";
-import { BrowserRouter, Routes, Route, UNSAFE_RouteContext } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import UserContext from "../contexts/UserContext";
 
 export default function App() {
 

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import register from "../services/mywallet";
-
+import { register } from "../services/mywallet";
 
 export default function RegisterPage() {
 
@@ -39,7 +38,7 @@ export default function RegisterPage() {
   return (
     <Wrapper>
       <h1>MyWallet</h1>
-      <Form>
+      <Form onSubmit={e => handleForm(e)}>
         <input type='text'
           placeholder="Nome"
           value={name}
@@ -62,7 +61,7 @@ export default function RegisterPage() {
           value={passwordConfirm}
           onChange={(e => setPasswordConfirm(e.target.value))}
           required />
-        <button onClick={handleForm}>Cadastrar</button>
+        <button>Cadastrar</button>
       </Form>
       <Link to='/'>Já tem uma conta? Entre agora!</Link>
     </Wrapper>
@@ -94,7 +93,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

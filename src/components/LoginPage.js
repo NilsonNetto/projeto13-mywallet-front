@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import login from "../services/mywallet";
-
+import { login } from "../services/mywallet";
+import UserContext from "../contexts/UserContext";
 
 export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleForm(e) {
@@ -20,20 +21,19 @@ export default function LoginPage() {
 
     login(body)
       .then(res => {
-        navigate('/MainPage');
+        setUserData(res.data);
+        navigate('/main');
       })
       .catch(res => {
         console.log(res.data);
         alert("Email ou senha incorretos");
       });
-
-
   }
 
   return (
     <Wrapper>
       <h1>MyWallet</h1>
-      <Form>
+      <Form onSubmit={e => handleForm(e)}>
         <input type='email'
           placeholder="Email"
           value={email}
@@ -45,7 +45,7 @@ export default function LoginPage() {
           value={password}
           onChange={(e => setPassword(e.target.value))}
           required />
-        <button onClick={handleForm}>Entrar</button>
+        <button>Entrar</button>
       </Form>
       <Link to='/register'>Primeira vez? Cadastre-se!</Link>
     </Wrapper>
@@ -77,7 +77,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
