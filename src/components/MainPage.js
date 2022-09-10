@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { RiLogoutBoxRLine, RiAddCircleLine, RiIndeterminateCircleLine } from 'react-icons/ri';
 import UserContext from "../contexts/UserContext";
+import TransactionContext from "../contexts/TransactionContext";
 import { useContext, useEffect, useState } from "react";
 import { getHistory, logout } from "../services/mywallet";
 import Movement from "./Movement";
@@ -8,11 +9,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   const [transactionsHistory, setTransactionsHistory] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
   const { userData } = useContext(UserContext);
+  const { setIncomeOrOutcome } = useContext(TransactionContext);
   const navigate = useNavigate();
-  //fazer um get de todas as contas da pessoa e colocar na variável de estado
-  //se tiver, faz um map com a variável deestado para mostrar as movimentações
-  //senão, coloca a mensagem "Não há registros de <br/> entrada ou de saída"
 
   useEffect(() => {
     if (userData) {
@@ -22,7 +22,6 @@ export default function MainPage() {
         }
       };
 
-      console.log(config);
       getHistory(config)
         .then(res => {
           setTransactionsHistory(res.data);
@@ -32,6 +31,7 @@ export default function MainPage() {
           alert('Error');
         });
     }
+    sumTotalValue(transactionsHistory);
   }, []);
 
   function logoutUser() {
@@ -54,6 +54,16 @@ export default function MainPage() {
     }
   }
 
+  function sumTotalValue(history) {
+    const values = history.map(transaction => Number(transaction.price));
+
+  }
+
+  useEffect(() => {
+    sumTotalValue(transactionsHistory);
+  }, [transactionsHistory]);
+
+
   return (
     <Wrapper>
       <Header>
@@ -61,21 +71,37 @@ export default function MainPage() {
         <RiLogoutBoxRLine onClick={logoutUser} />
       </Header>
       <History>
-        {transactionsHistory.length === 0 ? <p>Não há registros de entradas ou saídas</p> :
-          transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
-          />)}
+        <Transactions>
+          {transactionsHistory.length === 0 ? <p>Não há registros de entradas ou saídas</p> :
+            transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
+            />)}
+        </Transactions>
+        <Total totalValue={totalValue}>
+          <div>
+            Total:
+          </div>
+          <div className="total">
+            R$ {totalValue}
+          </div>
+        </Total>
       </History>
       <Footer>
-        <div>
+        <div onClick={() => {
+          setIncomeOrOutcome(true);
+          navigate('/transaction');
+        }}>
           <RiAddCircleLine />
           <p>Nova <br /> Entrada</p>
         </div>
-        <div>
+        <div onClick={() => {
+          setIncomeOrOutcome(false);
+          navigate('/transaction');
+        }}>
           <RiIndeterminateCircleLine />
           <p>Nova <br /> Saída</p>
         </div>
       </Footer>
-    </Wrapper>
+    </Wrapper >
   );
 }
 
@@ -114,6 +140,23 @@ const History = styled.div`
   p{
     margin: auto;
     color: #868686
+  }
+`;
+const Transactions = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+`;
+
+const Total = styled.div`
+  display: flex;
+  justify-content: space-between;
+  color: #000000;
+  font-size: 17px;
+  font-weight: 700;
+
+  &:last-child {
+    color: ${({ totalValue }) => totalValue >= 0 ? '#03AC00' : '#C70000'}
   }
 `;
 

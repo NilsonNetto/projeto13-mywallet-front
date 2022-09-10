@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function Movement({ movementData }) {
 
-  const { description, price, date } = movementData;
+  const { description, price, type, date } = movementData;
 
   return (
     <Wrapper>
@@ -10,7 +10,7 @@ export default function Movement({ movementData }) {
         <Date>{date}</Date>
         <Description>{description}</Description>
       </div>
-      <Price>R$ {price}</Price>
+      <Price type={type}>R$ {price}</Price>
     </Wrapper>
   );
 }
@@ -34,5 +34,5 @@ const Description = styled.span`
 
 const Price = styled.span`
   font-size: 16px;
-  color: ${({ price }) => price > 0 ? '#03AC00' : '#C70000'} 
+  color: ${({ type }) => type === "Income" ? '#03AC00' : '#C70000'} 
 `;
