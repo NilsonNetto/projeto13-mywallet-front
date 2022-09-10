@@ -18,4 +18,8 @@ function makeTransaction(body, headers) {
   return axios.post(`${URL}/transactions`, body, headers);
 }
 
-export { register, login, getHistory, makeTransaction };
+function logout(headers) {
+  return axios.delete(`${URL}/logout`, headers);
+}
+
+export { register, login, getHistory, makeTransaction, logout };

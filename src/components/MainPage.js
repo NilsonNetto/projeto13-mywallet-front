@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { RiLogoutBoxRLine, RiAddCircleLine, RiIndeterminateCircleLine } from 'react-icons/ri';
 import UserContext from "../contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
-import { getHistory } from "../services/mywallet";
+import { getHistory, logout } from "../services/mywallet";
 import Movement from "./Movement";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   const [transactionsHistory, setTransactionsHistory] = useState([]);
   const { userData } = useContext(UserContext);
-
+  const navigate = useNavigate();
   //fazer um get de todas as contas da pessoa e colocar na variável de estado
   //se tiver, faz um map com a variável deestado para mostrar as movimentações
   //senão, coloca a mensagem "Não há registros de <br/> entrada ou de saída"
@@ -33,15 +34,34 @@ export default function MainPage() {
     }
   }, []);
 
+  function logoutUser() {
+    if (userData) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.token}`
+        }
+      };
+
+      logout(config)
+        .then(res => {
+          alert('Usuário deslogado com sucesso');
+          navigate('/');
+        })
+        .catch(res => {
+          console.log(res.data);
+          alert('Error');
+        });
+    }
+  }
 
   return (
     <Wrapper>
       <Header>
         <h2>Olá, {userData.name}</h2>
-        <RiLogoutBoxRLine />
+        <RiLogoutBoxRLine onClick={logoutUser} />
       </Header>
       <History>
-        {transactionsHistory.length === 0 ? 'Não há registros de entradas ou saídas' :
+        {transactionsHistory.length === 0 ? <p>Não há registros de entradas ou saídas</p> :
           transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
           />)}
       </History>
@@ -89,7 +109,12 @@ const History = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  gap: 25px
+  gap: 25px;
+
+  p{
+    margin: auto;
+    color: #868686
+  }
 `;
 
 const Footer = styled.div`
