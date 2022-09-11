@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function MainPage() {
   const [transactionsHistory, setTransactionsHistory] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
+  const [isPositive, setIsPositive] = useState(true);
   const { userData } = useContext(UserContext);
   const { setIncomeOrOutcome } = useContext(TransactionContext);
   const navigate = useNavigate();
@@ -31,7 +32,6 @@ export default function MainPage() {
           alert('Error');
         });
     }
-    sumTotalValue(transactionsHistory);
   }, []);
 
   function logoutUser() {
@@ -55,14 +55,25 @@ export default function MainPage() {
   }
 
   function sumTotalValue(history) {
-    const values = history.map(transaction => Number(transaction.price));
-
+    let value = 0;
+    history.map(transaction => {
+      if (transaction.type === "Income") {
+        value = value + Number(transaction.price);
+      } else if (transaction.type === "Outcome") {
+        value = value - Number(transaction.price);
+      } else {
+        value = "Verificar tipo";
+      }
+    });
+    value >= 0 ? setIsPositive(true) : setIsPositive(false);
+    value = Number(value).toFixed(2);
+    value = value.replace('.', ',');
+    setTotalValue(value);
   }
 
   useEffect(() => {
     sumTotalValue(transactionsHistory);
   }, [transactionsHistory]);
-
 
   return (
     <Wrapper>
@@ -76,7 +87,7 @@ export default function MainPage() {
             transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
             />)}
         </Transactions>
-        <Total totalValue={totalValue}>
+        <Total isPositive={isPositive}>
           <div>
             Total:
           </div>
@@ -135,7 +146,9 @@ const History = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 25px;
+  overflow-y: scroll;
 
   p{
     margin: auto;
@@ -156,7 +169,7 @@ const Total = styled.div`
   font-weight: 700;
 
   &:last-child {
-    color: ${({ totalValue }) => totalValue >= 0 ? '#03AC00' : '#C70000'}
+    color: ${({ isPositive }) => isPositive ? '#03AC00' : '#C70000'}
   }
 `;
 

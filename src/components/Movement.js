@@ -4,13 +4,20 @@ export default function Movement({ movementData }) {
 
   const { description, price, type, date } = movementData;
 
+  function adjustNumber(number) {
+    let adjusted = number.replace(',', '.');
+    adjusted = Number(adjusted).toFixed(2);
+    adjusted = adjusted.replace('.', ',');
+    return adjusted;
+  }
+
   return (
     <Wrapper>
       <div>
         <Date>{date}</Date>
         <Description>{description}</Description>
       </div>
-      <Price type={type}>R$ {price}</Price>
+      <Price type={type}>R$ {adjustNumber(price)}</Price>
     </Wrapper>
   );
 }
