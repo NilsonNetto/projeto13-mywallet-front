@@ -79,7 +79,8 @@ export default function MainPage() {
     <Wrapper>
       <Header>
         <h2>Olá, {userData.name}</h2>
-        <RiLogoutBoxRLine onClick={logoutUser} />
+        <div> <RiLogoutBoxRLine onClick={logoutUser} /></div>
+
       </Header>
       <History>
         <Transactions>
@@ -135,6 +136,10 @@ const Header = styled.div`
   justify-content: space-between;
   font-size: 26px;
   font-weight: 700;
+
+  div{
+    cursor: pointer;
+  }
 `;
 
 const History = styled.div`
@@ -148,7 +153,7 @@ const History = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 25px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   p{
     margin: auto;
@@ -197,6 +202,7 @@ const Footer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     font-size: 25px;
+    cursor: pointer;
   }
 
   p{
