@@ -46,6 +46,7 @@ table {
 }
 body{
   font-family: 'Raleway', sans-serif;
+	font-weight: 400;
 	background-color: #8C11BE;
 	color: #FFFFFF;
 }

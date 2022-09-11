@@ -59,7 +59,7 @@ export default function Transaction() {
           onChange={(e => setDescription(e.target.value))}
           required
         />
-        <button>{incomeOrOutcome ? "Salvar Entrada" : "Salvar Saída"}</button>
+        <button>{incomeOrOutcome ? "Salvar entrada" : "Salvar saída"}</button>
       </Form>
     </Wrapper>
   );
@@ -108,6 +108,7 @@ const Form = styled.form`
     background-color: #A328D6;
     border: 1px solid #A32DB6;
     color: #FFFFFF;
-    font-style: 700;
+    font-size: 19px;
+    font-weight: 700;
   }
 `;
