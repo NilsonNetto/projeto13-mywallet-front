@@ -87,15 +87,15 @@ export default function MainPage() {
             transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
             />)}
         </Transactions>
-        <Total isPositive={isPositive}>
-          <div>
-            Total:
-          </div>
-          <div className="total">
-            R$ {totalValue}
-          </div>
-        </Total>
       </History>
+      <Total isPositive={isPositive}>
+        <div>
+          Total:
+        </div>
+        <TotalValue isPositive={isPositive}>
+          R$ {totalValue}
+        </TotalValue>
+      </Total>
       <Footer>
         <div onClick={() => {
           setIncomeOrOutcome(true);
@@ -138,12 +138,12 @@ const Header = styled.div`
 `;
 
 const History = styled.div`
-  margin: 15px 0;
+  margin: 15px 0 0 0;
   width: 100%;
   height: 100%;
-  padding: 20px 15px 10px 15px;
+  padding: 20px 15px 15px 15px;
   background-color: #FFFFFF;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -162,15 +162,22 @@ const Transactions = styled.div`
 `;
 
 const Total = styled.div`
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  border-radius: 0 0 5px 5px;
+  background-color: #FFFFFF;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: #000000;
   font-size: 17px;
   font-weight: 700;
+`;
 
-  &:last-child {
-    color: ${({ isPositive }) => isPositive ? '#03AC00' : '#C70000'}
-  }
+const TotalValue = styled.div`
+  color: ${({ isPositive }) => isPositive ? '#03AC00' : '#C70000'}
 `;
 
 const Footer = styled.div`
