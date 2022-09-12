@@ -14,7 +14,7 @@ export default function Movement({ movementData }) {
   return (
     <Wrapper>
       <div>
-        <Date>{date}</Date>
+        <DateStyle>{date}</DateStyle>
         <Description>{description}</Description>
       </div>
       <Price type={type}>R$ {adjustNumber(price)}</Price>
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Date = styled.span`
+const DateStyle = styled.span`
   font-size: 16px;
   color: #C6C6C6;
 `;
