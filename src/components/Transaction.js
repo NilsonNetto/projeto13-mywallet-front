@@ -7,7 +7,7 @@ import TransactionContext from "../contexts/TransactionContext";
 
 export default function Transaction() {
 
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const { userData } = useContext(UserContext);
   const { incomeOrOutcome } = useContext(TransactionContext);

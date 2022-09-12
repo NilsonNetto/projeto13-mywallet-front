@@ -83,7 +83,7 @@ export default function MainPage() {
 
       </Header>
       <History>
-        <Transactions>
+        <Transactions transactionsHistory={transactionsHistory}>
           {transactionsHistory.length === 0 ? <p>Não há registros de entradas ou saídas</p> :
             transactionsHistory.map((transaction, index) => <Movement key={index} movementData={transaction}
             />)}
@@ -154,6 +154,7 @@ const History = styled.div`
   justify-content: space-between;
   gap: 25px;
   overflow-y: auto;
+  text-align: center;
 
   p{
     margin: auto;
@@ -195,6 +196,7 @@ const Footer = styled.div`
 
   div{
     width: 100%;
+    height: 115px;
     padding: 10px;
     background-color: #A328D6;
     border-radius: 5px;

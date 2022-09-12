@@ -26,6 +26,13 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+  }
 `;
 
 const Date = styled.span`
@@ -40,6 +47,10 @@ const Description = styled.span`
 `;
 
 const Price = styled.span`
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   font-size: 16px;
   color: ${({ type }) => type === "Income" ? '#03AC00' : '#C70000'} 
 `;
