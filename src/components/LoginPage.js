@@ -21,6 +21,7 @@ export default function LoginPage() {
 
     login(body)
       .then(res => {
+        console.log('Made in Europe :]');
         setUserData(res.data);
         navigate('/main');
       })
