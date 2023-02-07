@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://localhost:5000';
+const URL = 'https://mywalletback-3mmh.onrender.com';
 
 function register(body) {
   return axios.post(`${URL}/register`, body);
