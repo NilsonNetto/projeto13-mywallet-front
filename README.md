@@ -40,7 +40,9 @@ npm install
 
 4. Follow the instructions to run the back-end
 
-5. Run the front-end with
+5. Create an .env file following the .env.example variables (back-end URL)
+
+6. Run the front-end with
 
 ```bash
 npm start

@@ -1,6 +1,8 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
-const URL = 'https://mywalletback-3mmh.onrender.com';
+const URL = process.env.REACT_APP_API_BASE_URL;
 
 function register(body) {
   return axios.post(`${URL}/register`, body);
