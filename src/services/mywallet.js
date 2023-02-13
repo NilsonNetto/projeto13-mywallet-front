@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const URL = process.env.REACT_APP_API_BASE_URL;
+console.log(URL)
 
 function register(body) {
   return axios.post(`${URL}/register`, body);
